@@ -5,14 +5,28 @@ msg_3 = "Yeah... division by zero. Smart move..."
 msg_4 = "Do you want to store the result? (y / n):"
 msg_5 = "Do you want to continue calculations? (y / n):"
 list_operators = ['+', '-', '*', '/']
-
+memory = ""
 while True:
     try:
+        bool_leave = False  # to leave double loop
         print(msg_0)
         calc = input().split()
-        x = float(calc[0])
+
+        if calc[0] == "M" and memory:
+            x = memory
+            y = float(calc[2])
+        elif calc[2] == "M" and memory:
+            y = memory
+            x = float(calc[0])
+        elif calc[2] == "M" and not memory:
+            memory = 0
+            x = float(calc[0])
+            y = memory
+        else:
+            x = float(calc[0])
+            y = float(calc[2])
+
         oper = (calc[1])
-        y = float(calc[2])
 
         if oper in list_operators:
             if oper == "+":
@@ -30,8 +44,47 @@ while True:
             print(msg_2)
             continue
 
+        print(result)
+
+        while True:
+
+            if bool_leave:
+                break
+
+            print(msg_4)
+            answer = input()
+
+            if answer == 'y':
+                memory = result
+
+                while True:
+                    print(msg_5)
+                    answer2 = input()
+
+                    if answer2 == "y":
+                        bool_leave = True
+                        break
+                    elif answer2 == "n":
+                        quit()
+                    else:
+                        continue
+
+            elif answer == "n":
+                while True:
+                    print(msg_5)
+                    answer2 = input()
+
+                    if answer2 == "y":
+                        bool_leave = True
+                        break
+                    elif answer2 == "n":
+                        quit()
+                    else:
+                        continue
+            else:
+                break
+
     except ValueError:
         print(msg_1)
-    else:
-        print(result)
+
 
