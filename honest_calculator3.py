@@ -8,6 +8,10 @@ msg_6 = " ... lazy"
 msg_7 = " ... very lazy"
 msg_8 = " ... very, very lazy"
 msg_9 = "You are"
+msg_10 = "Are you sure? It is only one digit! (y / n)"
+msg_11 = "Don't be silly! It's just one number! Add to the memory? (y / n)"
+msg_12 = "Last chance! Do you really want to embarrass yourself? (y / n)"
+msg_ = [msg_0, msg_1, msg_2, msg_3, msg_4, msg_5, msg_6, msg_7, msg_8, msg_9, msg_10, msg_11, msg_12]
 list_operators = ['+', '-', '*', '/']
 memory = 0.0
 con_store_result = True
@@ -57,7 +61,10 @@ def check_operator(x, y, oper):
 
 
 def variables_value(x, y, memory3, oper1):
-    if x == "M":
+    if x == "M" and y == "M":
+        x = memory3
+        y = memory3
+    elif x == "M":
         x = memory3
         y = float(y)
     elif y == "M":
@@ -78,7 +85,26 @@ def store_result(memory2, result1, con_store_result3):
         answer = input()
 
         if answer == "y":  # want to store result
-            memory2 = result1
+            if is_one_digit(result1):
+                msg_index = 10
+                while True:
+                    print(msg_[msg_index])
+                    msg_anwser = input()
+
+                    if msg_anwser == "y":
+                        if msg_index < 12:
+                            msg_index += 1
+                            continue
+                        else:
+                            memory2 = result1
+                            break
+                    elif msg_anwser == "n":
+                        break
+                    else:
+                        continue
+            else:
+                memory2 = result1
+
             con_store_result3 = continue_calculations(con_store_result3)
 
         elif answer == "n":  # don't want to store result
@@ -121,6 +147,7 @@ def is_one_digit(v):
     else:
         output = False
     return output
+
 
 def main(memory1, con_store_result1):
 
