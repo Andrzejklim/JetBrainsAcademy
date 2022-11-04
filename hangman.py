@@ -1,4 +1,7 @@
-word = 'python'
+import random
+tuple_of_words = ('python', 'java', 'swift', 'javascript')
+_random = random.randint(0, len(tuple_of_words) - 1)
+word = tuple_of_words[_random]
 
 
 def main():
